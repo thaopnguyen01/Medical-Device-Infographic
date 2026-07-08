@@ -1,1 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Medical Devices: The Basics, the Risk, and the Trends — LegitScript</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --inky: #051d40; --bright: #00c0fc; --dark-blue: #114989; --medium-blue: #0a7acc;
+    --light-blue: #cdecf8; --midnight: #2a3b4c; --gray-500: #667085; --gray-400: #98a2b3;
+    --gray-200: #ebebec; --gray-100: #f7f7f7; --green: #85c51f; --orange: #fe9e3a;
+    --red: #ff4c4c; --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Montserrat', sans-serif; color: var(--midnight); background: var(--white); line-height: 1.55; }
+  .page { max-width: 1080px; margin: 0 auto; }
 
+  /* MASTHEAD */
+  .masthead { background: var(--inky); color: var(--white); padding: 36px 48px 0; position: relative; overflow: hidden; }
+  .masthead::before { content:""; position:absolute; top:-60px; right:-60px; width:320px; height:320px; background: radial-gradient(circle, rgba(0,192,252,0.18) 0%, rgba(0,192,252,0) 70%); }
+  .logo-row { display:flex; align-items:center; gap:10px; margin-bottom:28px; position:relative; z-index:1; }
+  .eyebrow { font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--bright); margin-bottom:12px; position:relative; z-index:1; }
+  .masthead h1 { font-size:34px; font-weight:800; line-height:1.18; max-width:720px; position:relative; z-index:1; }
+  .masthead p.sub { margin-top:14px; font-size:15px; color:var(--light-blue); max-width:640px; position:relative; z-index:1; padding-bottom:28px; }
+
+  /* TABS */
+  .tabnav { display:flex; gap:0; position:relative; z-index:1; border-top:1px solid rgba(255,255,255,0.12); }
+  .tabbtn {
+    flex:1; background:none; border:none; color:var(--gray-400); font-family:'Montserrat',sans-serif;
+    font-size:14px; font-weight:700; padding:18px 20px; cursor:pointer; text-align:left;
+    border-bottom:3px solid transparent; transition:.15s;
+  }
+  .tabbtn .tabnum { color:var(--bright); font-size:11px; letter-spacing:.1em; display:block; margin-bottom:4px; }
+  .tabbtn.active { color:var(--white); border-bottom-color:var(--bright); }
+  .tabbtn:hover:not(.active) { color:var(--light-blue); }
+
+  .tabpanel { display:none; }
+  .tabpanel.active { display:block; }
+
+  section { padding: 48px 48px; }
+  section.alt { background: var(--gray-100); }
+  .section-label { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+  .hex { width:24px; height:24px; background:var(--bright); clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); flex-shrink:0; }
+  .section-label span { font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--medium-blue); }
+  h2.section-title { font-size:25px; font-weight:800; color:var(--inky); margin-bottom:14px; }
+  p.lede { font-size:15px; color:var(--gray-500); max-width:700px; margin-bottom:28px; }
+
+  /* DEFINITION CARD */
+  .definition-card { background:var(--inky); color:var(--white); border-radius:4px; padding:24px 30px; margin-bottom:32px; max-width:720px; }
+  .definition-card .tag { font-size:11px; font-weight:700; color:var(--bright); letter-spacing:.08em; text-transform:uppercase; margin-bottom:8px; }
+  .definition-card p { font-size:14.5px; color:var(--light-blue); }
+
+  /* CLASS GRID */
+  .class-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-bottom:36px; }
+  .class-card { border:1px solid var(--gray-200); border-radius:4px; padding:20px; }
+  .class-card .hexnum { width:32px; height:32px; background:var(--light-blue); clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px; color:var(--inky); margin-bottom:12px; }
+  .class-card h3 { font-size:15px; font-weight:700; color:var(--inky); margin-bottom:5px; }
+  .risk-tag { font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; display:inline-block; }
+  .class-card p { font-size:13px; color:var(--gray-500); }
+  .risk-low{color:var(--green)} .risk-med{color:var(--orange)} .risk-high{color:var(--red)}
+
+  /* PATHWAY */
+  .pathway { display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-bottom:36px; }
+  .pathway-step { background:var(--white); border:1px solid var(--gray-200); padding:20px 18px; position:relative; }
+  .pathway-step:not(:last-child)::after { content:"→"; position:absolute; right:-13px; top:50%; transform:translateY(-50%); color:var(--bright); font-size:18px; font-weight:800; z-index:2; }
+  .pathway-step .step-eyebrow { font-size:10.5px; font-weight:700; color:var(--medium-blue); letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
+  .pathway-step h4 { font-size:15px; font-weight:700; color:var(--inky); margin-bottom:6px; }
+  .pathway-step p { font-size:12.5px; color:var(--gray-500); }
+
+  /* TAXONOMY */
+  .taxonomy-list { display:flex; flex-direction:column; gap:9px; margin-bottom:36px; }
+  .taxonomy-row { display:flex; align-items:center; gap:14px; background:var(--white); border:1px solid var(--gray-200); border-radius:4px; padding:11px 16px; }
+  .taxonomy-row .swatch { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .taxonomy-row .name { font-size:13px; font-weight:600; color:var(--inky); flex:1; }
+  .taxonomy-row .count { font-size:12px; color:var(--gray-500); font-weight:500; }
+
+  /* DEVICE GROUPS */
+  .group-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:36px; }
+  .group-card { background:var(--white); border:1px solid var(--gray-200); border-radius:4px; padding:20px 22px; }
+  .group-card .gname { font-size:14.5px; font-weight:700; color:var(--inky); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
+  .group-card .gname .dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .group-card p { font-size:12.5px; color:var(--gray-500); margin-bottom:8px; }
+  .group-card .examples { font-size:11.5px; color:var(--medium-blue); font-weight:600; }
+
+  /* RISK LIST */
+  .risk-list { display:flex; flex-direction:column; gap:14px; }
+  .risk-item { display:grid; grid-template-columns:34px 1fr; gap:16px; align-items:flex-start; }
+  .risk-item .ricon { width:34px; height:34px; border-radius:50%; background:var(--red); opacity:.12; flex-shrink:0; }
+  .risk-item .ritext h5 { font-size:14px; font-weight:700; color:var(--inky); margin-bottom:3px; }
+  .risk-item .ritext p { font-size:13px; color:var(--gray-500); }
+
+  /* TAB 2 SPECIFIC */
+  .data-asof { display:inline-flex; align-items:center; gap:8px; background:var(--white); border:1px solid var(--gray-200); border-radius:20px; padding:6px 14px; font-size:12px; font-weight:600; color:var(--gray-500); margin-bottom:24px; }
+  .data-asof .dot { width:7px; height:7px; border-radius:50%; background:var(--orange); }
+
+  .bar-chart { display:flex; flex-direction:column; gap:12px; margin-bottom:40px; }
+  .bar-row { display:grid; grid-template-columns:180px 1fr 58px; align-items:center; gap:12px; }
+  .bar-row .name { font-size:12.5px; font-weight:600; color:var(--inky); text-align:right; }
+  .bar-track { background:var(--gray-200); border-radius:3px; height:20px; overflow:hidden; }
+  .bar-fill { height:100%; background:linear-gradient(90deg, var(--medium-blue), var(--bright)); border-radius:3px 0 0 3px; }
+  .bar-row .value { font-size:12px; color:var(--gray-500); font-weight:600; }
+
+  .col-title { font-size:12.5px; font-weight:700; color:var(--dark-blue); text-transform:uppercase; letter-spacing:.06em; margin-bottom:16px; margin-top: 8px;}
+
+  .product-group-heading { display:flex; align-items:center; gap:10px; margin: 36px 0 16px; }
+  .product-group-heading .gdot { width:10px; height:10px; border-radius:50%; }
+  .product-group-heading h4 { font-size:15px; font-weight:800; color:var(--inky); }
+
+  .product-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:8px; }
+  .product-card { border:1px solid var(--gray-200); border-radius:4px; padding:18px 20px; background:var(--white); position:relative; }
+  .product-card .pname-row { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:8px; }
+  .product-card h5 { font-size:14.5px; font-weight:700; color:var(--inky); }
+  .badge { font-size:9.5px; font-weight:800; text-transform:uppercase; letter-spacing:.04em; padding:3px 8px; border-radius:10px; white-space:nowrap; flex-shrink:0; }
+  .badge-volume { background:var(--light-blue); color:var(--dark-blue); }
+  .badge-riser { background:#fff0e0; color:var(--orange); }
+  .badge-gainer { background:#eaf6d9; color:var(--green); }
+  .product-card .label-tag { font-size:10px; font-weight:700; color:var(--gray-500); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; display:block; }
+  .product-card .field { margin-bottom:8px; }
+  .product-card .field .k { font-size:10.5px; font-weight:700; color:var(--medium-blue); text-transform:uppercase; letter-spacing:.04em; }
+  .product-card .field .v { font-size:12.5px; color:var(--gray-500); }
+  .infer-flag { font-size:11px; color:var(--orange); font-style:italic; margin-top:8px; }
+
+  .callout-box { background:var(--light-blue); border-radius:4px; padding:22px 26px; margin-top:16px; }
+  .callout-box .tag { font-size:10.5px; font-weight:700; color:var(--dark-blue); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .callout-box p { font-size:14px; color:var(--inky); }
+  .callout-box strong { color:var(--dark-blue); }
+
+  footer { background:var(--inky); color:var(--gray-400); padding:28px 48px; font-size:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+
+  @media (max-width:760px) {
+    .class-grid, .pathway, .group-grid, .product-grid { grid-template-columns:1fr; }
+    .pathway-step:not(:last-child)::after { display:none; }
+    .masthead h1 { font-size:26px; }
+    section { padding:36px 22px; }
+    .masthead { padding:28px 22px 0; }
+    .tabbtn { font-size:12.5px; padding:14px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="masthead">
+    <div class="logo-row">
+      <svg viewBox="0 0 288 88.7" xmlns="http://www.w3.org/2000/svg" style="height:20px;">
+        <g fill="#00c0fc" fill-rule="evenodd">
+          <path d="M59.5,27.4c-1.7,1-3.8,1-5.6,0l-7.5-4.4c-1.6-1-2.5-2.7-2.6-4.6v-8.9c0-1.8,1.1-3.6,2.6-4.6l7.5-4.3c1.8-1,4-1,5.7,0l7.5,4.3c1.6,1,2.5,2.7,2.6,4.6v8.9c0,1.9-1.1,3.5-2.6,4.5,0,0-7.5,4.4-7.5,4.4Z" opacity="0.35"/>
+          <path d="M30.3,27.4c-1.7,1-3.9,1-5.6,0l-7.5-4.4c-1.6-1-2.5-2.7-2.6-4.6v-8.9c0-1.8,1.1-3.6,2.6-4.6L24.7.8c1.8-1,4-1,5.7,0l7.5,4.3c1.6,1,2.5,2.7,2.6,4.6v8.9c0,1.9-1.1,3.5-2.6,4.5l-7.5,4.4h0Z" opacity="0.6"/>
+          <path d="M15.7,52.7c-1.7,1-3.8,1-5.6,0l-7.5-4.3C1.1,47.3,0,45.6,0,43.8v-8.9c0-1.8,1.1-3.5,2.6-4.5l7.5-4.3c1.8-1,3.9-1,5.7,0l7.5,4.3c1.6,1,2.5,2.7,2.6,4.5v8.9c0,1.8-1.1,3.5-2.6,4.5l-7.5,4.3h0Z"/>
+        </g>
+        <path fill="#ffffff" d="M30.3,77.9c-1.7,1-3.9,1-5.6,0l-7.5-4.3c-1.6-1-2.5-2.7-2.6-4.5v-8.9c0-1.8,1.1-3.5,2.6-4.5l7.5-4.3c1.8-1,4-1,5.7,0l7.5,4.3c1.6,1,2.5,2.7,2.6,4.5v8.9c0,1.8-1.1,3.6-2.6,4.5,0,0-7.5,4.3-7.5,4.3Z"/>
+        <text x="72" y="72" font-family="Montserrat, sans-serif" font-weight="700" font-size="34" fill="#ffffff">LegitScript</text>
+      </svg>
+    </div>
+    <div class="eyebrow">Medical Device Monitoring — Data Series</div>
+    <h1>What medical devices are, why unauthorized sales are risky, and what's trending right now.</h1>
+    <p class="sub">A two-part reference: the regulatory foundation your team needs to assess a listing, and a live read of what's actually moving on marketplace platforms — with plain-language context for every product involved.</p>
+
+    <div class="tabnav">
+      <button class="tabbtn active" data-tab="tab1"><span class="tabnum">PART ONE</span>The Basics &amp; the Risk</button>
+      <button class="tabbtn" data-tab="tab2"><span class="tabnum">PART TWO</span>Marketplace Trends</button>
+    </div>
+  </div>
+
+  <!-- ======================= TAB 1 ======================= -->
+  <div class="tabpanel active" id="tab1">
+
+    <section>
+      <div class="section-label"><div class="hex"></div><span>What It Is</span></div>
+      <h2 class="section-title">What is a medical device?</h2>
+      <p class="lede">The FD&C Act's definition is broad by design — it covers everything from a personal lubricant to an implanted pacemaker. What determines how strictly a product is regulated isn't what it's made of, but the risk it poses and the claims made about it.</p>
+
+      <div class="definition-card">
+        <div class="tag">FDA Legal Definition, Condensed</div>
+        <p>A medical device is any instrument, apparatus, or article — including software — intended to diagnose, treat, or prevent disease, or to affect the body's structure or function, without being metabolized like a drug.</p>
+      </div>
+
+      <div class="class-grid">
+        <div class="class-card">
+          <div class="hexnum">I</div><div class="risk-tag risk-low">Low Risk</div>
+          <h3>Class I</h3>
+          <p>Minimal potential for harm. Most are exempt from premarket review — bandages, exam gloves, handheld surgical tools.</p>
+        </div>
+        <div class="class-card">
+          <div class="hexnum">II</div><div class="risk-tag risk-med">Moderate Risk</div>
+          <h3>Class II</h3>
+          <p>Requires demonstrated safety controls. Most need 510(k) clearance — blood pressure cuffs, contact lenses, condoms.</p>
+        </div>
+        <div class="class-card">
+          <div class="hexnum">III</div><div class="risk-tag risk-high">High Risk</div>
+          <h3>Class III</h3>
+          <p>Sustains or supports life, or presents significant injury risk. Requires full FDA approval — pacemakers, dermal fillers, breast implants.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="section-label"><div class="hex"></div><span>Getting to Market</span></div>
+      <h2 class="section-title">How medical devices get regulated</h2>
+      <p class="lede">A device's class determines its path to market — and that path is exactly what a marketplace listing skips when it sells directly to a consumer with no clinical gatekeeper involved.</p>
+
+      <div class="pathway">
+        <div class="pathway-step">
+          <div class="step-eyebrow">Class I</div><h4>Exempt</h4>
+          <p>Most Class I devices skip premarket review entirely. General controls (labeling, manufacturing standards) still apply.</p>
+        </div>
+        <div class="pathway-step">
+          <div class="step-eyebrow">Class II</div><h4>510(k) Clearance</h4>
+          <p>Manufacturer shows the device is "substantially equivalent" to one already on the market. Clearance, not approval.</p>
+        </div>
+        <div class="pathway-step">
+          <div class="step-eyebrow">Class III</div><h4>Premarket Approval (PMA)</h4>
+          <p>Full clinical evidence review required before the FDA approves the device for sale. The highest bar in the system.</p>
+        </div>
+      </div>
+
+      <p class="lede" style="margin-bottom:16px;">Monitoring teams track the taxonomy below, not just "Class III" as one bucket — since a listing can be reportable for different reasons.</p>
+
+      <div class="taxonomy-list">
+        <div class="taxonomy-row"><div class="swatch" style="background:var(--red)"></div><div class="name">Class III Medical Device</div><div class="count">Highest scrutiny — requires FDA approval</div></div>
+        <div class="taxonomy-row"><div class="swatch" style="background:var(--red)"></div><div class="name">Class III or Prescription-Only Medical Device</div><div class="count">Ambiguous class, always prescription-gated</div></div>
+        <div class="taxonomy-row"><div class="swatch" style="background:var(--orange)"></div><div class="name">Prescription-Only Medical Device</div><div class="count">Requires a prescription regardless of class</div></div>
+        <div class="taxonomy-row"><div class="swatch" style="background:var(--medium-blue)"></div><div class="name">510(k)-Required Medical Devices</div><div class="count">Class II, needs clearance before sale</div></div>
+        <div class="taxonomy-row"><div class="swatch" style="background:var(--gray-400)"></div><div class="name">Unapproved / Unauthorized Medical Device</div><div class="count">No valid marketing authorization on file</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-label"><div class="hex"></div><span>Device Groups</span></div>
+      <h2 class="section-title">The groups behind the numbers</h2>
+      <p class="lede">Individual product names roll up into a handful of functional groups. Knowing the group tells you what oversight is being skipped when the device shows up unsupervised.</p>
+
+      <div class="group-grid">
+        <div class="group-card">
+          <div class="gname"><div class="dot" style="background:var(--red)"></div>Injectable &amp; Aesthetic Devices</div>
+          <p>Substances or devices placed under the skin or injected to alter appearance — volume, texture, or contour.</p>
+          <div class="examples">e.g., dermal fillers, RF microneedling devices</div>
+        </div>
+        <div class="group-card">
+          <div class="gname"><div class="dot" style="background:var(--medium-blue)"></div>Reproductive &amp; Intimate Health</div>
+          <p>High-volume, everyday-use devices tied to sexual health and menstrual care.</p>
+          <div class="examples">e.g., personal lubricants, condoms, tampons</div>
+        </div>
+        <div class="group-card">
+          <div class="gname"><div class="dot" style="background:var(--orange)"></div>Body Contouring &amp; Weight Management</div>
+          <p>Devices marketed to reshape the body non-surgically, most originally designed for supervised clinical settings.</p>
+          <div class="examples">e.g., liposuction devices, cryolipolysis machines</div>
+        </div>
+        <div class="group-card">
+          <div class="gname"><div class="dot" style="background:var(--green)"></div>Pain &amp; Rehabilitation</div>
+          <p>Therapeutic devices intended to treat musculoskeletal or nerve-related pain, usually under clinical guidance.</p>
+          <div class="examples">e.g., shockwave therapy devices, therapeutic lasers</div>
+        </div>
+        <div class="group-card">
+          <div class="gname"><div class="dot" style="background:var(--dark-blue)"></div>Monitoring &amp; Diagnostic Devices</div>
+          <p>Devices intended to measure a physiological value or screen for a condition — accuracy is the entire point.</p>
+          <div class="examples">e.g., insulin injector pens, bilirubinometers, hyperbaric chambers</div>
+        </div>
+        <div class="group-card">
+          <div class="gname"><div class="dot" style="background:var(--gray-500)"></div>Vision &amp; Optical Devices</div>
+          <p>Devices worn on or in the eye — corrective, cosmetic, or both.</p>
+          <div class="examples">e.g., contact lenses, including non-corrective decorative lenses</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="section-label"><div class="hex"></div><span>The Risk</span></div>
+      <h2 class="section-title">Why unauthorized marketplace sales are dangerous</h2>
+      <p class="lede">A device isn't risky because of what it's made of — it's risky because of what's missing when it's sold outside its intended pathway.</p>
+
+      <div class="risk-list">
+        <div class="risk-item">
+          <div class="ricon"></div>
+          <div class="ritext">
+            <h5>No clinical oversight for administration</h5>
+            <p>Devices designed to be used by a trained provider — injectables, contouring equipment, therapeutic lasers — carry real procedural risk when self-administered: vascular occlusion and blindness from improperly placed filler, burns from unsupervised RF or cryo devices, and tissue damage from misapplied therapeutic energy.</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <div class="ricon"></div>
+          <div class="ritext">
+            <h5>No manufacturing or quality oversight</h5>
+            <p>An FDA pathway exists to verify sterility, dosing accuracy, and material safety. Devices sold outside that pathway have none of it verified — counterfeit filler, contaminated lubricant, or an insulin pen with an inaccurate dose are all indistinguishable from the authentic product until something goes wrong.</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <div class="ricon"></div>
+          <div class="ritext">
+            <h5>No prescription gate where one is required</h5>
+            <p>Prescription-only devices exist because a clinician needs to rule out contraindications first. Selling directly to a consumer removes that check entirely — the buyer has no way to know if the device is appropriate for them.</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <div class="ricon"></div>
+          <div class="ritext">
+            <h5>No adverse event reporting or recall reach</h5>
+            <p>Authorized devices are traceable — if something goes wrong, the FDA can issue a recall and reach affected users. An unauthorized listing has no such trail: if a batch is defective, buyers have no way to be notified.</p>
+          </div>
+        </div>
+        <div class="risk-item">
+          <div class="ricon"></div>
+          <div class="ritext">
+            <h5>Marketing that hides the device status</h5>
+            <p>Listings frequently frame a regulated device as a "beauty tool" or "wellness gadget" rather than a medical device — which is often exactly what lets it bypass a platform's own content moderation in the first place.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ======================= TAB 2 ======================= -->
+  <div class="tabpanel" id="tab2">
+
+    <section>
+      <div class="section-label"><div class="hex"></div><span>The Headline Numbers</span></div>
+      <h2 class="section-title">What's trending in illicit device listings</h2>
+      <p class="lede">Ranked by listing volume and velocity across monitored marketplaces. "Trending" means two different things here: what's already large, and what's growing fastest from a small base — the second is often the earlier warning sign.</p>
+
+      <div class="data-asof"><div class="dot"></div>Listings data as of June 2, 2026 — 36 days behind today, longer than this source's typical lag</div>
+
+      <div class="col-title">By Volume — Last 90 Days</div>
+      <div class="bar-chart">
+        <div class="bar-row"><div class="name">Personal Lubricant</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="value">3,157</div></div>
+        <div class="bar-row"><div class="name">Male Condom</div><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div><div class="value">1,228</div></div>
+        <div class="bar-row"><div class="name">Contact Lenses</div><div class="bar-track"><div class="bar-fill" style="width:29%"></div></div><div class="value">909</div></div>
+        <div class="bar-row"><div class="name">Liposuction Device</div><div class="bar-track"><div class="bar-fill" style="width:27%"></div></div><div class="value">864</div></div>
+        <div class="bar-row"><div class="name">Hyperbaric Oxygen Chamber</div><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><div class="value">492</div></div>
+        <div class="bar-row"><div class="name">Insulin Injector Pen</div><div class="bar-track"><div class="bar-fill" style="width:15%"></div></div><div class="value">487</div></div>
+      </div>
+
+      <div class="callout-box">
+        <div class="tag">Read Together</div>
+        <p>Personal lubricants and condoms dominate by <strong>raw volume</strong> — high-frequency, low-novelty categories. But <strong>Vivafill, Cahafill, and the Bilirubinometer</strong> show the sharper signal: near-zero to dozens of listings within weeks, concentrated on a single platform. That pattern — sudden, single-platform appearance — is typically the earlier and more actionable warning than volume alone.</p>
+      </div>
+    </section>
+
+    <section class="alt">
+      <div class="section-label"><div class="hex"></div><span>Product Guide</span></div>
+      <h2 class="section-title">What each trending product is, and why it ends up on a marketplace</h2>
+      <p class="lede">Legitimate medical use, paired with the reason a version of it turns up for sale directly to consumers — usually cost, convenience, or a workaround for a professional or prescription requirement.</p>
+
+      <!-- REPRODUCTIVE & INTIMATE HEALTH -->
+      <div class="product-group-heading"><div class="gdot" style="background:var(--medium-blue)"></div><h4>Reproductive &amp; Intimate Health</h4></div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pname-row"><h5>Personal Lubricant</h5><span class="badge badge-volume">Volume Leader</span></div>
+          <span class="label-tag">510(k)-Required</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Water- or silicone-based product intended to reduce friction during intimate activity; regulated as a device because of the direct-contact and compatibility claims involved (e.g., condom-safe formulations).</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Extremely high consumer demand, low unit cost, and buyers rarely realize the category is FDA-regulated at all — making it an easy, low-scrutiny import.</span></div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Male Condom</h5><span class="badge badge-volume">Volume Leader</span></div>
+          <span class="label-tag">510(k)-Required</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Barrier device for contraception and STI prevention; clearance verifies material integrity and burst-strength testing.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Bulk, unbranded imports undercut retail pricing significantly — but skip the burst/leak testing that clearance exists to verify.</span></div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Tampons</h5><span class="badge badge-riser">Fast Riser</span></div>
+          <span class="label-tag">510(k)-Required</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Menstrual hygiene device; regulated for absorbency labeling accuracy and material safety, tied to toxic shock syndrome (TSS) risk.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Newly appearing at high velocity (16 listings in days) — likely a low-cost import entering a category buyers don't expect to be regulated.</span></div>
+        </div>
+      </div>
+
+      <!-- VISION -->
+      <div class="product-group-heading"><div class="gdot" style="background:var(--gray-500)"></div><h4>Vision &amp; Optical</h4></div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pname-row"><h5>Contact Lenses</h5><span class="badge badge-volume">Volume Leader</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Includes both corrective and purely cosmetic (decorative/costume) lenses — both require a fitting and prescription, even lenses with zero corrective power.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Decorative color-change lenses are marketed as costume or fashion accessories, letting sellers imply they're not medical at all — despite carrying real corneal infection and vision-damage risk from poor fit or non-sterile manufacturing.</span></div>
+        </div>
+      </div>
+
+      <!-- BODY CONTOURING -->
+      <div class="product-group-heading"><div class="gdot" style="background:var(--orange)"></div><h4>Body Contouring &amp; Weight Management</h4></div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pname-row"><h5>Liposuction Device</h5><span class="badge badge-volume">Volume Leader</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Surgical equipment for removing fat deposits; intended strictly for use by trained medical professionals in a clinical setting.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Sold to non-professionals running unlicensed "med-spa" style cosmetic services — carries burn, perforation, and infection risk with no surgical training behind it.</span></div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Cryo Freezing for Weight Loss Machine</h5></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Cryolipolysis ("fat freezing") equipment intended to reduce localized fat under supervised, controlled temperature application.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Marketed as a home wellness or "med-spa business starter" device; unsupervised use carries frostbite risk and, paradoxically, can worsen fat deposits if misapplied.</span></div>
+        </div>
+      </div>
+
+      <!-- INJECTABLE / AESTHETIC -->
+      <div class="product-group-heading"><div class="gdot" style="background:var(--red)"></div><h4>Injectable &amp; Aesthetic Devices</h4></div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pname-row"><h5>Vivafill</h5><span class="badge badge-gainer">Sharpest Gainer</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Went from 0 to 90 listings in weeks, appearing on a single platform.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Injectable fillers are administered by trained providers because misplacement near blood vessels can cause vascular occlusion or vision loss — none of that oversight exists in a marketplace sale.</span></div>
+          <div class="infer-flag">Note: brand naming pattern matches known dermal filler brands (e.g., Restylane, Revolax) — inferred, not confirmed by data.</div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Cahafill</h5><span class="badge badge-gainer">Net Gainer</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">New entrant, 0 to 36 listings in the same window as Vivafill and Collaborne — part of the same apparent cluster.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Same injectable-filler risk profile as above: self- or unlicensed-administration carries infection and vascular risk a clinical setting is designed to prevent.</span></div>
+          <div class="infer-flag">Note: inferred filler category from naming pattern — not confirmed by data.</div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Collaborne</h5><span class="badge badge-gainer">Net Gainer</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Another new entrant in the same cluster and time window as Vivafill and Cahafill.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Same underlying pattern — a wave of similarly-named products often signals a single supplier or manufacturer testing multiple brand names at once.</span></div>
+          <div class="infer-flag">Note: inferred filler category from naming pattern — not confirmed by data.</div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>RF Microneedling Device</h5></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Combines radiofrequency energy with microneedling to stimulate collagen production for skin tightening or scar treatment — a professional in-office procedure.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Home-use versions are marketed as an at-home alternative to med-spa treatments; improper needle depth or unsterile use risks burns, scarring, and infection.</span></div>
+        </div>
+      </div>
+
+      <!-- PAIN & REHAB -->
+      <div class="product-group-heading"><div class="gdot" style="background:var(--green)"></div><h4>Pain &amp; Rehabilitation</h4></div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pname-row"><h5>Shockwave Therapy Device</h5></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Delivers acoustic pulses to treat musculoskeletal pain and, in clinical settings, certain forms of erectile dysfunction.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Sold direct-to-consumer for both pain relief and ED marketing claims, bypassing the clinical assessment that would normally rule out an underlying condition first.</span></div>
+        </div>
+      </div>
+
+      <!-- DIAGNOSTIC & MONITORING -->
+      <div class="product-group-heading"><div class="gdot" style="background:var(--dark-blue)"></div><h4>Monitoring &amp; Diagnostic Devices</h4></div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pname-row"><h5>Hyperbaric Oxygen Chamber</h5><span class="badge badge-volume">Volume Leader</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Delivers pressurized oxygen for approved indications like wound healing and decompression sickness — requires trained supervision due to fire and pressure-injury risk.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Wellness and biohacking marketing sells home units for unapproved uses (anti-aging, cognitive claims), with none of the supervision the approved use case requires.</span></div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Insulin Injector Pen</h5><span class="badge badge-gainer">Net Gainer</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Delivers precise, prescribed insulin doses for diabetes management — dosing accuracy is the entire safety case for the device.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Sold as a cheaper alternative to a prescribed pen; an unauthorized unit has no verified dosing accuracy and no recall trail if a batch is defective — a meaningful risk for a device managing a life-threatening condition.</span></div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Transcutaneous Bilirubinometer</h5><span class="badge badge-riser">Fast Riser</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Non-invasive device that screens newborns for jaundice by measuring bilirubin through the skin.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Marketed to parents and small clinics for at-home or low-cost screening; an uncalibrated unit risks a false-negative reading that delays treatment for a condition that can cause serious harm if missed.</span></div>
+        </div>
+      </div>
+
+      <!-- DENTAL -->
+      <div class="product-group-heading"><div class="gdot" style="background:var(--gray-400)"></div><h4>Dental Devices</h4></div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="pname-row"><h5>Bruxism Mouthguard</h5><span class="badge badge-riser">Fast Riser</span></div>
+          <span class="label-tag">510(k)-Required</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Worn overnight to reduce damage from teeth grinding; effective versions are custom-fitted to the wearer's bite.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Generic "one-size" versions make therapeutic claims without any dental fitting — a mismatch can worsen bite alignment over time rather than protect it.</span></div>
+        </div>
+        <div class="product-card">
+          <div class="pname-row"><h5>Ortho-Bonding</h5><span class="badge badge-gainer">Net Gainer</span></div>
+          <span class="label-tag">Class III or Prescription-Only</span>
+          <div class="field"><span class="k">What it is</span><br><span class="v">Adhesive material used by orthodontists to attach brackets to teeth as part of professionally supervised treatment.</span></div>
+          <div class="field"><span class="k">Why it's on marketplaces</span><br><span class="v">Sold as part of DIY orthodontic kits aimed at consumers wanting a cheaper alternative to braces — without professional monitoring, misapplied bonding risks enamel damage and poor bite alignment.</span></div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <footer>
+    <div>LegitScript · Internal monitoring series · Trending data as of June 2, 2026 · For internal use</div>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.tabbtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tabbtn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tabpanel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+</script>
+
+</body>
+</html>
